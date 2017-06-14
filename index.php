@@ -20,8 +20,6 @@ $app->register(new DoctrineMongoDbProvider(), array(
   'mongodb.options' => array(
     'server' => 'mongodb://localhost:27017',
     'options' => array(
-      'username' => 'root',
-      'password' => 'root',
       'db' => 'admin'
     )
   )
