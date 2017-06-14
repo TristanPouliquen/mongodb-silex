@@ -38,7 +38,7 @@ $app->get('/numbersForDate', function(Application $app, Request $request){
   if (preg_match($regex, $date)){
     $results = $app['mongodb']->selectDatabase('admin')->selectCollection('escuchas')->find(['fecha' => $date], ['numero' => true]);
 
-    return new JsonResponse($results);
+    return new JsonResponse(iterator_to_array($results));
   } else {
     return new JsonResponse(['error'=> 'Date badly formatted. Try again with AAAA-MM-DD format.']);
   }
@@ -49,7 +49,7 @@ $app->get('/lastMessagesForNumber',function(Application $app, Request $request){
   $k = $request->query->get('k');
   if (preg_match("/^[0-9]{8}$/", $number) && preg_match("/^[0-9]*$/", $k)){
     $results = $app['mongodb']->selectDatabase('admin')->selectCollection('escuchas')->find(['numero'=> $number])->sort(['fecha'=> -1])->limit($k);
-    return new JsonResponse($results);
+    return new JsonResponse(iterator_to_array($results));
   } else {
     return new JsonResponse(['error' => 'Parameters badly formatted. Number must be of 8 digits, and k an integer.']);
   }
@@ -59,7 +59,7 @@ $app->get('/wordInContent', function(Application $app, Request $request){
   $keyword = $request->query->get('keyword');
   $results = $app['mongodb']->selectDatabase('admin')->selectCollection('escuchas')->find(['$text' => ['$search' => $keyword]]);
 
-  return new JsonResponse($results);
+  return new JsonResponse(iterator_to_array($results));
 });
 
 $app->run();
