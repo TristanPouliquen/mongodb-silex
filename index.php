@@ -4,6 +4,7 @@ require_once __DIR__.'/vendor/autoload.php';
 
 use Silex\Application;
 use Silex\Provider\MonologServiceProvider;
+use Saxulum\DoctrineMongoDb\Provider\DoctrineMongoDbProvider;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 
