@@ -34,7 +34,7 @@ $app->get('/', function(Application $app){
 
 $app->get('/numbersForDate', function(Application $app, Request $request){
   $date = $request->query->get('date');
-  $regex= "[0-9]{4}-[0-9]{2}-[0-9]{2}";
+  $regex= "/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/";
   if (preg_match($regex, $date)){
     $results = $app['mongodb']->selectDatabase('admin')->selectCollection('escuchas')->find(['fecha' => $date], ['numero' => 1]);
 
@@ -47,7 +47,7 @@ $app->get('/numbersForDate', function(Application $app, Request $request){
 $app->get('/lastMessagesForNumber',function(Application $app, Request $request){
   $number = $request->query->get('number');
   $k = $request->query->get('k');
-  if (preg_match("[0-9]{8}", $number) && preg_match("[0-9]*", $k)){
+  if (preg_match("/^[0-9]{8}$/", $number) && preg_match("/^[0-9]*$/", $k)){
     $results = $app['mongodb']->selectDatabase('admin')->selectCollection('escuchas')->find(['number'=> $number])->sort(['fecha'=> -1])->limit($k);
     return new JsonResponse($results);
   } else {
