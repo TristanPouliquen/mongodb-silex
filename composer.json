@@ -1,6 +1,8 @@
 {
     "require": {
         "silex/silex": "*",
-        "monolog/monolog": "^1.22"
+        "monolog/monolog": "^1.22",
+        "alcaeus/mongo-php-adapter": "^1.1",
+        "saxulum/saxulum-doctrine-mongodb-provider": "^2.0"
     }
 }
