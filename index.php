@@ -48,7 +48,7 @@ $app->get('/lastMessagesForNumber',function(Application $app, Request $request){
   $number = $request->query->get('number');
   $k = $request->query->get('k');
   if (preg_match("/^[0-9]{8}$/", $number) && preg_match("/^[0-9]*$/", $k)){
-    $results = $app['mongodb']->selectDatabase('admin')->selectCollection('escuchas')->find(['number'=> $number])->sort(['fecha'=> -1])->limit($k);
+    $results = $app['mongodb']->selectDatabase('admin')->selectCollection('escuchas')->find(['numero'=> $number])->sort(['fecha'=> -1])->limit($k);
     return new JsonResponse($results);
   } else {
     return new JsonResponse(['error' => 'Parameters badly formatted. Number must be of 8 digits, and k an integer.']);
